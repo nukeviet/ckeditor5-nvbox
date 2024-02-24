@@ -15,13 +15,13 @@ export default class NVBox extends Plugin {
      * @inheritDoc
      */
     static get pluginName() {
-        return 'NVBox';
+        return 'NVBox' as const;
     }
 
     /**
      * @inheritDoc
      */
     static get requires() {
-        return [NVBoxUI];
+        return [NVBoxUI] as const;
     }
 }
