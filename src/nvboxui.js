@@ -21,6 +21,7 @@ export default class NVBoxUI extends Plugin {
         const editor = this.editor;
         const command = editor.commands.get('nvbox');
         if (!command) {
+            console.log("No command");
             return;
         }
         const t = editor.t;
