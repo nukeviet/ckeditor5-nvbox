@@ -17,7 +17,7 @@ export default class NVBoxEditing extends Plugin {
      * @inheritDoc
      */
     static get requires() {
-        return ['LinkEditing', 'PictureEditing'];
+        return ['LinkEditing'];
     }
     /**
      * @inheritDoc
