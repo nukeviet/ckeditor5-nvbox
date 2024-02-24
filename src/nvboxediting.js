@@ -24,16 +24,7 @@ export default class NVBoxEditing extends Plugin {
      */
     init() {
         const editor = this.editor;
-        const isLibraryLoaded = !!window.NVBox;
-        // Proceed with plugin initialization only when the integrator intentionally wants to use it, i.e. when the `config.ckbox` exists or
-        // the CKBox JavaScript library is loaded.
-        if (!isLibraryLoaded) {
-            return;
-        }
-        this._checkImagePlugins();
-        if (isLibraryLoaded) {
-            editor.commands.add('nvbox', new NVBoxCommand(editor));
-        }
+        editor.commands.add('nvbox', new NVBoxCommand(editor));
     }
     /**
      * Checks if at least one image plugin is loaded.
