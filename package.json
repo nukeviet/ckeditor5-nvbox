@@ -1,6 +1,6 @@
 {
   "name": "@nukeviet/ckeditor5-nvbox",
-  "version": "4.5.00",
+  "version": "41.1.0",
   "description": "Register browse server option for ImageInsert icon.",
   "keywords": [
     "nukeviet",
@@ -47,8 +47,8 @@
     "url": "https://github.com/nukeviet/ckeditor5-nvbox.git"
   },
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "src",
+    "build"
   ],
   "scripts": {
     "dll:build": "webpack",
