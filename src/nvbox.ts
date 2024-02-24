@@ -9,6 +9,7 @@
 
 import { Plugin } from 'ckeditor5/src/core.js';
 import NVBoxUI from './nvboxui.js';
+import NVBoxEditing from './nvboxediting.js';
 
 export default class NVBox extends Plugin {
     /**
@@ -22,6 +23,6 @@ export default class NVBox extends Plugin {
      * @inheritDoc
      */
     static get requires() {
-        return [NVBoxUI] as const;
+        return [NVBoxEditing, NVBoxUI] as const;
     }
 }

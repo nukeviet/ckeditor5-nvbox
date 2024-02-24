@@ -26,13 +26,11 @@ export default class NVBoxUI extends Plugin {
      */
     public afterInit(): void {
         const editor = this.editor;
-
         const command: NVBoxCommand | undefined = editor.commands.get('nvbox');
         if (!command) {
-            console.log("No command");
+            console.log('No command nvbox');
             return;
         }
-
         const t = editor.t;
 
         if (editor.plugins.has('ImageInsertUI')) {

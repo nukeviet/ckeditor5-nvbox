@@ -8,6 +8,7 @@
  */
 import { Plugin } from 'ckeditor5/src/core.js';
 import NVBoxUI from './nvboxui.js';
+import NVBoxEditing from './nvboxediting.js';
 export default class NVBox extends Plugin {
     /**
      * @inheritDoc
@@ -19,7 +20,7 @@ export default class NVBox extends Plugin {
      * @inheritDoc
      */
     static get requires() {
-        return [NVBoxUI];
+        return [NVBoxEditing, NVBoxUI];
     }
 }
 //# sourceMappingURL=nvbox.js.map

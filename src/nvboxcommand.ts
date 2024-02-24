@@ -5,25 +5,20 @@
 
 /* global document, window, setTimeout, URL */
 
-/**
- * @module ckbox/ckboxcommand
- */
-
-import type { Writer } from 'ckeditor5/src/engine.js';
-import { Command, type Editor } from 'ckeditor5/src/core.js';
-import { createElement, toMap } from 'ckeditor5/src/utils.js';
+import { Command } from 'ckeditor5/src/core.js';
 
 export default class NVBoxCommand extends Command {
-
 	/**
 	 * @inheritDoc
 	 */
 	public override refresh(): void {
+		console.log('refresh nvbox command');
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public override execute(): void {
+		console.log('execute nvbox command');
 	}
 }

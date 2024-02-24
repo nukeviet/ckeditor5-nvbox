@@ -7,5 +7,14 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
+/**
+ * @module nvbox
+ */
+
 export { default as NVBox } from './nvbox.js';
+export { default as NVBoxEditing } from './nvboxediting.js';
+export { default as NVBoxUI } from './nvboxui.js';
+
+export type { default as NVBoxCommand } from './nvboxcommand.js';
+
 import './augmentation.js';
