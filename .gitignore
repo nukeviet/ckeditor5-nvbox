@@ -13,6 +13,6 @@ package-lock.json
 yalc.lock
 
 # Ignore compiled TypeScript files.
-#src/**/*.js
-#src/**/*.js.map
-#src/**/*.d.ts
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts

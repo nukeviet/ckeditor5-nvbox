@@ -6,7 +6,7 @@
 /* globals window */
 
 import { Plugin } from 'ckeditor5/src/core.js';
-import { logError } from 'ckeditor5/src/utils.js';
+import { CKEditorError } from 'ckeditor5/src/utils.js';
 import NVBoxCommand from './nvboxcommand.js';
 
 export default class NVBoxEditing extends Plugin {
@@ -29,30 +29,11 @@ export default class NVBoxEditing extends Plugin {
 	 */
 	public init(): void {
 		const editor = this.editor;
-		editor.commands.add('nvbox', new NVBoxCommand(editor));
-	}
-
-	/**
-	 * Checks if at least one image plugin is loaded.
-	 */
-	private _checkImagePlugins() {
-		const editor = this.editor;
 
 		if (!editor.plugins.has('ImageBlockEditing') && !editor.plugins.has('ImageInlineEditing')) {
-			/**
-			 * The CKBox feature requires one of the following plugins to be loaded to work correctly:
-			 *
-			 * * {@link module:image/imageblock~ImageBlock},
-			 * * {@link module:image/imageinline~ImageInline},
-			 * * {@link module:image/image~Image} (loads both `ImageBlock` and `ImageInline`)
-			 *
-			 * Please make sure your editor configuration is correct.
-			 *
-			 * @error ckbox-plugin-image-feature-missing
-			 * @param {module:core/editor/editor~Editor} editor
-			 */
-			logError('ckbox-plugin-image-feature-missing', editor);
+			throw new CKEditorError('nvbox-missing-image-plugin', editor);
 		}
-	}
 
+		editor.commands.add('nvbox', new NVBoxCommand(editor));
+	}
 }

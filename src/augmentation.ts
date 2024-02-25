@@ -7,10 +7,19 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
-export {};
+import type {
+	NVBox,
+	NVBoxCommand,
+	NVBoxEditing,
+} from './index.js';
 
-declare global {
-	// eslint-disable-next-line no-var
-	var NVBox: {
-	};
+declare module '@ckeditor/ckeditor5-core' {
+	interface PluginsMap {
+		[NVBox.pluginName]: NVBox;
+		[NVBoxEditing.pluginName]: NVBoxEditing;
+	}
+
+	interface CommandsMap {
+		nvbox: NVBoxCommand;
+	}
 }

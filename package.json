@@ -47,6 +47,7 @@
     "url": "https://github.com/nukeviet/ckeditor5-nvbox.git"
   },
   "files": [
+    "lang",
     "src",
     "build"
   ],

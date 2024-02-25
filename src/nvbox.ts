@@ -23,6 +23,6 @@ export default class NVBox extends Plugin {
      * @inheritDoc
      */
     static get requires() {
-        return [NVBoxEditing, NVBoxUI] as const;
+        return ['Link', NVBoxEditing, NVBoxUI] as const;
     }
 }

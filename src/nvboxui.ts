@@ -26,29 +26,52 @@ export default class NVBoxUI extends Plugin {
      */
     public afterInit(): void {
         const editor = this.editor;
-        const command: NVBoxCommand | undefined = editor.commands.get('nvbox');
-        if (!command) {
-            console.log('No command nvbox');
-            return;
-        }
+        const componentFactory = editor.ui.componentFactory;
         const t = editor.t;
+
+        componentFactory.add('nvbox', locale => {
+            const command: NVBoxCommand = editor.commands.get('nvbox')!;
+
+            const button = new ButtonView(locale);
+
+            button.set({
+                label: t('Insert file from NVFileManager'),
+                icon: icons.browseFiles,
+                tooltip: true
+            });
+
+            button.bind('isEnabled').to(command);
+
+            button.on('execute', () => {
+                editor.execute('nvbox');
+                editor.editing.view.focus();
+            });
+
+            return button;
+        });
 
         if (editor.plugins.has('ImageInsertUI')) {
             const imageInsertUI: ImageInsertUI = editor.plugins.get('ImageInsertUI');
+            const command: NVBoxCommand = editor.commands.get('nvbox')!;
+
             imageInsertUI.registerIntegration({
                 name: 'assetManager',
                 observable: command,
 
                 buttonViewCreator: () => {
-                    const uploadImageButton = editor.ui.componentFactory.create('uploadImage') as ButtonView;
-                    uploadImageButton.bind('label').to(imageInsertUI, 'isImageSelected', isImageSelected => isImageSelected ?
-                        t('Replace image file manager') :
-                        t('Upload image file manager'));
-                    return uploadImageButton;
+                    const button = this.editor.ui.componentFactory.create('nvbox') as ButtonView;
+
+                    button.icon = icons.imageAssetManager;
+                    button.bind('label').to(imageInsertUI, 'isImageSelected', isImageSelected => isImageSelected ?
+                        t('Replace image with file manager') :
+                        t('Insert image with file manager')
+                    );
+
+                    return button;
                 },
 
                 formViewCreator: () => {
-                    const button = this.editor.ui.componentFactory.create('uploadImage') as ButtonView;
+                    const button = this.editor.ui.componentFactory.create('nvbox') as ButtonView;
 
                     button.icon = icons.imageAssetManager;
                     button.withText = true;
