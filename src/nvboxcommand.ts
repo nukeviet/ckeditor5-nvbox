@@ -12,6 +12,7 @@
 import { Command, type Editor } from 'ckeditor5/src/core.js';
 
 import type { Notification } from 'ckeditor5/src/ui.js';
+import { extIsAudio, extIsImage, extIsVideo, getFileExtension } from './utils.js';
 
 export default class NVBoxCommand extends Command {
 	constructor(editor: Editor) {
@@ -31,8 +32,6 @@ export default class NVBoxCommand extends Command {
 	 * @inheritDoc
 	 */
 	public override refresh(): void {
-		console.log('refresh nvbox command');
-
 		const imageCommand = this.editor.commands.get('insertImage')!;
 		const linkCommand = this.editor.commands.get('link')!;
 
@@ -45,14 +44,62 @@ export default class NVBoxCommand extends Command {
 	 */
 	public override execute(href: string = '', options: Record<string, boolean> = {}): void {
 		const editor = this.editor;
+		const nvboxOptions = this.editor.config.get('nvbox.options') || {};
+		const notification: Notification = editor.plugins.get('Notification');
+		const t = editor.locale.t;
 
 		if (href !== '') {
-			// Trả lại khi pick
-			console.log('execute nvbox command', href);
+			// Xử lý khi pick
+			const fileExt = getFileExtension(href);
+
+			// Chèn ảnh, command của ckeditor
+			if (extIsImage(fileExt)) {
+				const imageCommand = editor.commands.get('insertImage')!;
+
+				if (!imageCommand.isEnabled) {
+					notification.showWarning(t('Could not insert image at the current position.'), {
+						title: t('Inserting image failed'),
+						namespace: 'nvbox'
+					});
+
+					return;
+				}
+
+				if (options.alt) {
+					editor.execute('insertImage', {
+						source: [{
+							src: href,
+							alt: options.alt
+						}]
+					});
+				} else {
+					editor.execute('insertImage', { source: href });
+				}
+				return;
+			}
+
+			// Chèn âm thanh, chưa viết
+			if (extIsAudio(fileExt)) {
+				console.log('Insert Audio available in future');
+				//return;
+			}
+
+			// Chèn video, chưa viết
+			if (extIsVideo(fileExt)) {
+				console.log('Insert Video available in future');
+				//return;
+			}
+
+			// Chèn link, command của ckeditor
+			editor.execute('link', href, {
+				linkIsExternal: false,
+				linkIsDownloadable: true
+			});
 			return;
 		}
 
-		const browseUrl = this.editor.config.get('nvbox.browseUrl') || '';
+		// Lấy đường dẫn duyệt file
+		let browseUrl = this.editor.config.get('nvbox.browseUrl') || '';
 		if (browseUrl == '') {
 			const notification: Notification = editor.plugins.get('Notification');
 			const t = editor.locale.t;
@@ -64,7 +111,11 @@ export default class NVBoxCommand extends Command {
 
 			return;
 		}
+		if (nvboxOptions.noCache) {
+			browseUrl += ((browseUrl.indexOf('?') == -1) ? '?' : '&') + 'nocache=' + (new Date().getTime());
+		}
 
+		// Mở popup duyệt file
 		let w = (screen.availWidth * 70 / 100);
 		let h = (screen.availHeight * 70 / 100);
 

@@ -30,4 +30,13 @@ export interface NVBoxConfig {
      *
      */
     browseUrl?: string;
+
+    /*
+     *
+     */
+    options?: NVBoxOptions;
+}
+
+export interface NVBoxOptions extends Record<string, unknown> {
+	noCache?: boolean;
 }
