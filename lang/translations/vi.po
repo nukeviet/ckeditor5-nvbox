@@ -15,3 +15,11 @@ msgstr ""
 msgctxt "Toolbar button text for open FileManager."
 msgid "Insert file from NVFileManager"
 msgstr "Chèn tệp tin từ trình quản lý File"
+
+msgctxt "browserUrl is not set."
+msgid "browserUrl is not set."
+msgstr "Chưa thiết lập browserUrl"
+
+msgctxt "Error config NVBox"
+msgid "Error config NVBox"
+msgstr "Lỗi thiết lập plugin NVBOX"

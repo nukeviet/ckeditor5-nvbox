@@ -1,12 +1,17 @@
 /**
- * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ * NukeViet NVBox for CKEditor5
+ * @version 4.x
+ * @author VINADES.,JSC <contact@vinades.vn>
+ * @copyright (C) 2009-2024 VINADES.,JSC. All rights reserved
+ * @license GNU/GPL version 2 or any later version
+ * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
 /* globals window */
 
 import { Plugin } from 'ckeditor5/src/core.js';
 import { CKEditorError } from 'ckeditor5/src/utils.js';
+import { Notification } from 'ckeditor5/src/ui.js';
 import NVBoxCommand from './nvboxcommand.js';
 
 export default class NVBoxEditing extends Plugin {
@@ -21,7 +26,7 @@ export default class NVBoxEditing extends Plugin {
 	 * @inheritDoc
 	 */
 	public static get requires() {
-		return ['LinkEditing'] as const;
+		return [Notification, 'LinkEditing'] as const;
 	}
 
 	/**

@@ -10,10 +10,18 @@
 import type {
 	NVBox,
 	NVBoxCommand,
+	NVBoxConfig,
 	NVBoxEditing,
 } from './index.js';
 
 declare module '@ckeditor/ckeditor5-core' {
+	interface EditorConfig {
+		/**
+		 *
+		 */
+		nvbox?: NVBoxConfig;
+	}
+
 	interface PluginsMap {
 		[NVBox.pluginName]: NVBox;
 		[NVBoxEditing.pluginName]: NVBoxEditing;

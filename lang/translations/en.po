@@ -15,3 +15,11 @@ msgstr ""
 msgctxt "Toolbar button text for open FileManager."
 msgid "Insert file from NVFileManager"
 msgstr "Insert file from File manager"
+
+msgctxt "browserUrl is not set."
+msgid "browserUrl is not set."
+msgstr "browserUrl is not set."
+
+msgctxt "Error config NVBox"
+msgid "Error config NVBox"
+msgstr "Error config NVBox"
