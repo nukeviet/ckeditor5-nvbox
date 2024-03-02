@@ -21,8 +21,7 @@
     "@ckeditor/ckeditor5-image": "41.1.0",
     "@ckeditor/ckeditor5-ui": "41.1.0",
     "@ckeditor/ckeditor5-utils": "41.1.0",
-    "typescript": "5.0.4",
-    "webpack": "^5.58.1"
+    "typescript": "5.0.4"
   },
   "author": "VINADES.,JSC (https://vinades.vn/)",
   "license": "GPL-2.0-or-later",
@@ -38,7 +37,6 @@
     "build"
   ],
   "scripts": {
-    "dll:build": "webpack",
     "build": "tsc -p ./tsconfig.json"
   }
 }
