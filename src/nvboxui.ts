@@ -52,11 +52,10 @@ export default class NVBoxUI extends Plugin {
 
         if (editor.plugins.has('ImageInsertUI')) {
             const imageInsertUI: ImageInsertUI = editor.plugins.get('ImageInsertUI');
-            const command: NVBoxCommand = editor.commands.get('nvbox')!;
 
             imageInsertUI.registerIntegration({
                 name: 'assetManager',
-                observable: command,
+                observable: () => editor.commands.get('nvbox')!,
 
                 buttonViewCreator: () => {
                     const button = this.editor.ui.componentFactory.create('nvbox') as ButtonView;
