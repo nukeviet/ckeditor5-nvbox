@@ -78,16 +78,10 @@ export default class NVBoxCommand extends Command {
 				return;
 			}
 
-			// Chèn âm thanh, chưa viết
-			if (extIsAudio(fileExt)) {
-				console.log('Insert Audio available in future');
-				//return;
-			}
-
-			// Chèn video, chưa viết
-			if (extIsVideo(fileExt)) {
-				console.log('Insert Video available in future');
-				//return;
+			// Chèn âm thanh, video
+			if (extIsAudio(fileExt) || extIsVideo(fileExt)) {
+				editor.execute('insertNVMedia', { source: href });
+				return;
 			}
 
 			// Chèn link, command của ckeditor
