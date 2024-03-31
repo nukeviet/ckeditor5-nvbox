@@ -21,6 +21,7 @@
     "@ckeditor/ckeditor5-image": "41.2.0",
     "@ckeditor/ckeditor5-ui": "41.2.0",
     "@ckeditor/ckeditor5-utils": "41.2.0",
+    "@nukeviet/ckeditor5-nvmedia": "github:nukeviet/ckeditor5-nvmedia",
     "typescript": "5.0.4"
   },
   "author": "VINADES.,JSC (https://vinades.vn/)",

@@ -11,6 +11,7 @@ import { icons, Plugin } from 'ckeditor5/src/core.js';
 import { ButtonView } from 'ckeditor5/src/ui.js';
 
 import type { ImageInsertUI } from '@ckeditor/ckeditor5-image';
+import type { NVMediaInsertUI } from '@nukeviet/ckeditor5-nvmedia';
 import type NVBoxCommand from './nvboxcommand.js';
 
 export default class NVBoxUI extends Plugin {
@@ -50,6 +51,7 @@ export default class NVBoxUI extends Plugin {
             return button;
         });
 
+        // Tích hợp chèn ảnh từ trình quản lý tập tin
         if (editor.plugins.has('ImageInsertUI')) {
             const imageInsertUI: ImageInsertUI = editor.plugins.get('ImageInsertUI');
 
@@ -81,6 +83,45 @@ export default class NVBoxUI extends Plugin {
 
                     button.on('execute', () => {
                         imageInsertUI.dropdownView!.isOpen = false;
+                    });
+
+                    return button;
+                }
+            });
+        }
+
+        // Tích hợp chèn media từ trình quản lý tệp tin
+        if (editor.plugins.has('NVMediaInsertUI')) {
+            const mediaInsertUI: NVMediaInsertUI = editor.plugins.get('NVMediaInsertUI');
+
+            mediaInsertUI.registerIntegration({
+                name: 'assetManager',
+                observable: () => editor.commands.get('nvbox')!,
+
+                buttonViewCreator: () => {
+                    const button = this.editor.ui.componentFactory.create('nvbox') as ButtonView;
+
+                    button.icon = icons.imageAssetManager;
+                    button.bind('label').to(mediaInsertUI, 'isMediaSelected', isMediaSelected => isMediaSelected ?
+                        t('Replace media with file manager') :
+                        t('Insert media with file manager')
+                    );
+
+                    return button;
+                },
+
+                formViewCreator: () => {
+                    const button = this.editor.ui.componentFactory.create('nvbox') as ButtonView;
+
+                    button.icon = icons.imageAssetManager;
+                    button.withText = true;
+                    button.bind('label').to(mediaInsertUI, 'isMediaSelected', isMediaSelected => isMediaSelected ?
+                        t('Replace with file manager') :
+                        t('Insert with file manager')
+                    );
+
+                    button.on('execute', () => {
+                        mediaInsertUI.dropdownView!.isOpen = false;
                     });
 
                     return button;
