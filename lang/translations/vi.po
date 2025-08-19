@@ -23,3 +23,11 @@ msgstr "Chưa thiết lập browserUrl"
 msgctxt "Error config NVBox"
 msgid "Error config NVBox"
 msgstr "Lỗi thiết lập plugin NVBOX"
+
+msgctxt "Insert media with file manager"
+msgid "Insert media with file manager"
+msgstr "Chèn phương tiện bằng trình quản lý tệp tin"
+
+msgctxt "Replace media with file manager"
+msgid "Replace media with file manager"
+msgstr "Thay thế phương tiện bằng trình quản lý tệp tin"

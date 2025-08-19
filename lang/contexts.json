@@ -1,5 +1,7 @@
 {
 	"Insert file from NVFileManager": "Toolbar button text for open FileManager.",
 	"browserUrl is not set.": "browserUrl is not set.",
-	"Error config NVBox": "Error config NVBox"
+	"Error config NVBox": "Error config NVBox",
+	"Insert media with file manager": "Tooltip khi hover vào nút chèn media trên thanh Toolbar",
+	"Replace media with file manager": "Tooltip khi hover vào nút chèn media trên thanh Toolbar khi có media đã bôi đậm trong trình soạn thảo"
 }

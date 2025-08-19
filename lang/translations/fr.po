@@ -23,3 +23,11 @@ msgstr "L'URL du navigateur n'est pas définie."
 msgctxt "Error config NVBox"
 msgid "Error config NVBox"
 msgstr "Erreur de configuration NVBox"
+
+msgctxt "Insert media with file manager"
+msgid "Insert media with file manager"
+msgstr "Insérer un média avec le gestionnaire de fichiers"
+
+msgctxt "Replace media with file manager"
+msgid "Replace media with file manager"
+msgstr "Remplacer le média avec le gestionnaire de fichiers"

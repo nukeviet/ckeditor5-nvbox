@@ -23,3 +23,11 @@ msgstr "browserUrl is not set."
 msgctxt "Error config NVBox"
 msgid "Error config NVBox"
 msgstr "Error config NVBox"
+
+msgctxt "Insert media with file manager"
+msgid "Insert media with file manager"
+msgstr "Insert media with file manager"
+
+msgctxt "Replace media with file manager"
+msgid "Replace media with file manager"
+msgstr "Replace media with file manager"

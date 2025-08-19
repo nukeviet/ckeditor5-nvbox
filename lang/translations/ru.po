@@ -23,3 +23,11 @@ msgstr "URL-адрес браузера не установлен."
 msgctxt "Error config NVBox"
 msgid "Error config NVBox"
 msgstr "Ошибка конфигурации NVBox"
+
+msgctxt "Insert media with file manager"
+msgid "Insert media with file manager"
+msgstr "Вставить медиафайл через файловый менеджер"
+
+msgctxt "Replace media with file manager"
+msgid "Replace media with file manager"
+msgstr "Заменить медиафайл через файловый менеджер"
