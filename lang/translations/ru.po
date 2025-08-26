@@ -31,3 +31,7 @@ msgstr "Вставить медиафайл через файловый мене
 msgctxt "Replace media with file manager"
 msgid "Replace media with file manager"
 msgstr "Заменить медиафайл через файловый менеджер"
+
+msgctxt "With file manager"
+msgid "With file manager"
+msgstr "С файловым менеджером"

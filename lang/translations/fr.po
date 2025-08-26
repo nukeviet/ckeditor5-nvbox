@@ -31,3 +31,7 @@ msgstr "Insérer un média avec le gestionnaire de fichiers"
 msgctxt "Replace media with file manager"
 msgid "Replace media with file manager"
 msgstr "Remplacer le média avec le gestionnaire de fichiers"
+
+msgctxt "With file manager"
+msgid "With file manager"
+msgstr "Avec le gestionnaire de fichiers"

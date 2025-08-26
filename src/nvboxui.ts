@@ -7,9 +7,9 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
-import { icons, Plugin } from 'ckeditor5/src/core.js';
-import { ButtonView } from 'ckeditor5/src/ui.js';
-
+import { Plugin } from 'ckeditor5/src/core.js';
+import { ButtonView, MenuBarMenuListItemButtonView } from 'ckeditor5/src/ui.js';
+import { IconBrowseFiles, IconImageAssetManager } from '@ckeditor/ckeditor5-icons';
 import type { ImageInsertUI } from '@ckeditor/ckeditor5-image';
 import type { NVMediaInsertUI } from '@nukeviet/ckeditor5-nvmedia';
 import type NVBoxCommand from './nvboxcommand.js';
@@ -37,7 +37,7 @@ export default class NVBoxUI extends Plugin {
 
             button.set({
                 label: t('Insert file from NVFileManager'),
-                icon: icons.browseFiles,
+                icon: IconBrowseFiles,
                 tooltip: true
             });
 
@@ -59,10 +59,11 @@ export default class NVBoxUI extends Plugin {
                 name: 'assetManager',
                 observable: () => editor.commands.get('nvbox')!,
 
+                // Nút chèn ảnh/đổi ảnh trên toolbar tùy đối tượng đang chọn
                 buttonViewCreator: () => {
-                    const button = this.editor.ui.componentFactory.create('nvbox') as ButtonView;
+                    const button = this._createButton(ButtonView);
 
-                    button.icon = icons.imageAssetManager;
+                    button.icon = IconImageAssetManager;
                     button.bind('label').to(imageInsertUI, 'isImageSelected', isImageSelected => isImageSelected ?
                         t('Replace image with file manager') :
                         t('Insert image with file manager')
@@ -71,10 +72,11 @@ export default class NVBoxUI extends Plugin {
                     return button;
                 },
 
+                // Menu thêm vào của trình chèn ảnh
                 formViewCreator: () => {
-                    const button = this.editor.ui.componentFactory.create('nvbox') as ButtonView;
+                    const button = this._createButton(ButtonView);
 
-                    button.icon = icons.imageAssetManager;
+                    button.icon = IconImageAssetManager;
                     button.withText = true;
                     button.bind('label').to(imageInsertUI, 'isImageSelected', isImageSelected => isImageSelected ?
                         t('Replace with file manager') :
@@ -84,6 +86,21 @@ export default class NVBoxUI extends Plugin {
                     button.on('execute', () => {
                         imageInsertUI.dropdownView!.isOpen = false;
                     });
+
+                    return button;
+                },
+
+                // Menu trong menubar (thanh công cụ thường thấy trên word)
+                menuBarButtonViewCreator: (isOnly) => {
+                    const button = this._createButton(MenuBarMenuListItemButtonView);
+                    button.icon = IconImageAssetManager;
+		            button.withText = true;
+
+                    if (isOnly) {
+                        button.label = this.editor.locale.t('Image');
+                    } else {
+                        button.label = t('With file manager');
+                    }
 
                     return button;
                 }
@@ -99,9 +116,9 @@ export default class NVBoxUI extends Plugin {
                 observable: () => editor.commands.get('nvbox')!,
 
                 buttonViewCreator: () => {
-                    const button = this.editor.ui.componentFactory.create('nvbox') as ButtonView;
+                    const button = this._createButton(ButtonView);
 
-                    button.icon = icons.imageAssetManager;
+                    button.icon = IconImageAssetManager;
                     button.bind('label').to(mediaInsertUI, 'isMediaSelected', isMediaSelected => isMediaSelected ?
                         t('Replace media with file manager') :
                         t('Insert media with file manager')
@@ -111,9 +128,9 @@ export default class NVBoxUI extends Plugin {
                 },
 
                 formViewCreator: () => {
-                    const button = this.editor.ui.componentFactory.create('nvbox') as ButtonView;
+                    const button = this._createButton(ButtonView);
 
-                    button.icon = icons.imageAssetManager;
+                    button.icon = IconImageAssetManager;
                     button.withText = true;
                     button.bind('label').to(mediaInsertUI, 'isMediaSelected', isMediaSelected => isMediaSelected ?
                         t('Replace with file manager') :
@@ -129,4 +146,25 @@ export default class NVBoxUI extends Plugin {
             });
         }
     }
+
+    /**
+     * Tạo nút, loại nút tùy đầu vào
+     *
+     * @param ButtonClass
+     * @returns
+     */
+    private _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>( ButtonClass: T ): InstanceType<T> {
+        const editor = this.editor;
+        const locale = editor.locale;
+        const view = new ButtonClass(locale) as InstanceType<T>;
+        const command = editor.commands.get('nvbox')!;
+
+        view.bind('isOn', 'isEnabled').to(command, 'value', 'isEnabled');
+
+        view.on('execute', () => {
+            editor.execute('nvbox');
+        });
+
+        return view;
+	}
 }

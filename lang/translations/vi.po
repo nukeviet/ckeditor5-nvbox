@@ -31,3 +31,7 @@ msgstr "Chèn phương tiện bằng trình quản lý tệp tin"
 msgctxt "Replace media with file manager"
 msgid "Replace media with file manager"
 msgstr "Thay thế phương tiện bằng trình quản lý tệp tin"
+
+msgctxt "With file manager"
+msgid "With file manager"
+msgstr "Với trình quản lý tệp tin"
