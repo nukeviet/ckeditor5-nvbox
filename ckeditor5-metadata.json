@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    {
+      "name": "NVBox",
+      "className": "NVBox",
+      "description": "Register browse server icon and file manager integration.",
+      "path": "src/nvbox.ts"
+    }
+  ]
+}

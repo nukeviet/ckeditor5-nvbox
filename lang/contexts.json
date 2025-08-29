@@ -1,5 +1,8 @@
 {
-	"With file manager": "With file manager.",
+	"Image": "Image",
+	"Inserting image failed": "Inserting image failed",
+	"Could not insert image at the current position.": "Could not insert image at the current position.",
+	"by file manager": "by file manager.",
 	"Insert file from NVFileManager": "Toolbar button text for open FileManager.",
 	"browserUrl is not set.": "browserUrl is not set.",
 	"Error config NVBox": "Error config NVBox",

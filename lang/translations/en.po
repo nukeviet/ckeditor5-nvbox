@@ -7,9 +7,8 @@
 #
 msgid ""
 msgstr ""
-"Language-Team: English (https://nukeviet.vn/)\n"
 "Language: en\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
 msgctxt "Toolbar button text for open FileManager."
@@ -32,6 +31,18 @@ msgctxt "Replace media with file manager"
 msgid "Replace media with file manager"
 msgstr "Replace media with file manager"
 
-msgctxt "With file manager"
-msgid "With file manager"
-msgstr "With file manager"
+msgctxt "Image"
+msgid "Image"
+msgstr "Image"
+
+msgctxt "Inserting image failed"
+msgid "Inserting image failed"
+msgstr "Inserting image failed"
+
+msgctxt "Could not insert image at the current position."
+msgid "Could not insert image at the current position."
+msgstr "Could not insert image at the current position."
+
+msgctxt "by file manager."
+msgid "by file manager"
+msgstr "by file manager"

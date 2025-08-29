@@ -28,7 +28,7 @@ export default class NVBoxUI extends Plugin {
     public afterInit(): void {
         const editor = this.editor;
         const componentFactory = editor.ui.componentFactory;
-        const t = editor.t;
+        const t = editor.locale.t;
 
         componentFactory.add('nvbox', locale => {
             const command: NVBoxCommand = editor.commands.get('nvbox')!;
@@ -97,9 +97,9 @@ export default class NVBoxUI extends Plugin {
 		            button.withText = true;
 
                     if (isOnly) {
-                        button.label = this.editor.locale.t('Image');
+                        button.label = t('Image');
                     } else {
-                        button.label = t('With file manager');
+                        button.label = t('by file manager');
                     }
 
                     return button;
