@@ -7,10 +7,10 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
-import { Plugin } from 'ckeditor5/src/core.js';
-import { ButtonView, MenuBarMenuListItemButtonView } from 'ckeditor5/src/ui.js';
-import { IconBrowseFiles, IconImageAssetManager } from '@ckeditor/ckeditor5-icons';
-import type { ImageInsertUI } from '@ckeditor/ckeditor5-image';
+import { Plugin } from 'ckeditor5';
+import { ButtonView, MenuBarMenuListItemButtonView } from 'ckeditor5';
+import { IconBrowseFiles, IconImageAssetManager } from 'ckeditor5';
+import type { ImageInsertUI } from 'ckeditor5';
 import type { NVMediaInsertUI } from '@nukeviet/ckeditor5-nvmedia';
 import type NVBoxCommand from './nvboxcommand.js';
 

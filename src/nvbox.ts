@@ -7,7 +7,7 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
-import { Plugin } from 'ckeditor5/src/core.js';
+import { Plugin } from 'ckeditor5';
 import NVBoxUI from './nvboxui.js';
 import NVBoxEditing from './nvboxediting.js';
 

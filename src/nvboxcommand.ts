@@ -9,9 +9,9 @@
 
 /* global document, window, setTimeout, URL */
 
-import { Command, type Editor } from 'ckeditor5/src/core.js';
+import { Command, type Editor } from 'ckeditor5';
 
-import type { Notification } from 'ckeditor5/src/ui.js';
+import type { Notification } from 'ckeditor5';
 import { extIsAudio, extIsImage, extIsVideo, getFileExtension } from './utils.js';
 
 export default class NVBoxCommand extends Command {

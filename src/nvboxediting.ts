@@ -9,9 +9,9 @@
 
 /* globals window */
 
-import { Plugin } from 'ckeditor5/src/core.js';
-import { CKEditorError } from 'ckeditor5/src/utils.js';
-import { Notification } from 'ckeditor5/src/ui.js';
+import { Plugin } from 'ckeditor5';
+import { CKEditorError } from 'ckeditor5';
+import { Notification } from 'ckeditor5';
 import NVBoxCommand from './nvboxcommand.js';
 
 export default class NVBoxEditing extends Plugin {
