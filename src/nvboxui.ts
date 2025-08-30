@@ -99,7 +99,7 @@ export default class NVBoxUI extends Plugin {
                     if (isOnly) {
                         button.label = t('Image');
                     } else {
-                        button.label = t('by file manager');
+                        button.label = t('By file manager');
                     }
 
                     return button;

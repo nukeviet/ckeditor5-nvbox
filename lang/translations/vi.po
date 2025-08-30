@@ -33,16 +33,16 @@ msgstr "Thay thế phương tiện bằng trình quản lý tệp tin"
 
 msgctxt "Image"
 msgid "Image"
-msgstr ""
+msgstr "Ảnh"
 
 msgctxt "Inserting image failed"
 msgid "Inserting image failed"
-msgstr ""
+msgstr "Chèn ảnh thất bại"
 
 msgctxt "Could not insert image at the current position."
 msgid "Could not insert image at the current position."
-msgstr ""
+msgstr "Không thể chèn ảnh tại vị trí hiện tại."
 
-msgctxt "by file manager."
-msgid "by file manager"
-msgstr ""
+msgctxt "By file manager."
+msgid "By file manager"
+msgstr "Từ trình quản lý tệp tin"

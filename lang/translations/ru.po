@@ -33,16 +33,16 @@ msgstr "Заменить медиафайл через файловый мене
 
 msgctxt "Image"
 msgid "Image"
-msgstr ""
+msgstr "Изображение"
 
 msgctxt "Inserting image failed"
 msgid "Inserting image failed"
-msgstr ""
+msgstr "Не удалось вставить изображение."
 
 msgctxt "Could not insert image at the current position."
 msgid "Could not insert image at the current position."
-msgstr ""
+msgstr "Не удалось вставить изображение в текущее положение."
 
-msgctxt "by file manager."
-msgid "by file manager"
-msgstr ""
+msgctxt "By file manager."
+msgid "By file manager"
+msgstr "Через файловый менеджер"

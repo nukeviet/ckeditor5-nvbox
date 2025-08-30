@@ -33,16 +33,16 @@ msgstr "Remplacer le média avec le gestionnaire de fichiers"
 
 msgctxt "Image"
 msgid "Image"
-msgstr ""
+msgstr "Image"
 
 msgctxt "Inserting image failed"
 msgid "Inserting image failed"
-msgstr ""
+msgstr "Échec de l'insertion de l'image."
 
 msgctxt "Could not insert image at the current position."
 msgid "Could not insert image at the current position."
-msgstr ""
+msgstr "Impossible d'insérer l'image à la position actuelle."
 
-msgctxt "by file manager."
-msgid "by file manager"
-msgstr ""
+msgctxt "By file manager."
+msgid "By file manager"
+msgstr "Par le gestionnaire de fichiers"
