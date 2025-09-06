@@ -14,6 +14,8 @@ import type { ImageInsertUI } from 'ckeditor5';
 import type { NVMediaInsertUI } from '@nukeviet/ckeditor5-nvmedia';
 import type NVBoxCommand from './nvboxcommand.js';
 
+import mediaIcon from '../theme/icons/media-asset-manager.svg';
+
 export default class NVBoxUI extends Plugin {
     /**
      * @inheritDoc
@@ -118,11 +120,12 @@ export default class NVBoxUI extends Plugin {
                 buttonViewCreator: () => {
                     const button = this._createButton(ButtonView);
 
-                    button.icon = IconImageAssetManager;
+                    button.icon = mediaIcon;
                     button.bind('label').to(mediaInsertUI, 'isMediaSelected', isMediaSelected => isMediaSelected ?
                         t('Replace media with file manager') :
                         t('Insert media with file manager')
                     );
+                    button.tooltip = true;
 
                     return button;
                 },
@@ -130,7 +133,7 @@ export default class NVBoxUI extends Plugin {
                 formViewCreator: () => {
                     const button = this._createButton(ButtonView);
 
-                    button.icon = IconImageAssetManager;
+                    button.icon = mediaIcon;
                     button.withText = true;
                     button.bind('label').to(mediaInsertUI, 'isMediaSelected', isMediaSelected => isMediaSelected ?
                         t('Replace with file manager') :
