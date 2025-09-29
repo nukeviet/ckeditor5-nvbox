@@ -1,8 +1,8 @@
 /**
  * NukeViet NVBox for CKEditor5
- * @version 4.x
+ * @version 5.x
  * @author VINADES.,JSC <contact@vinades.vn>
- * @copyright (C) 2009-2024 VINADES.,JSC. All rights reserved
+ * @copyright (C) 2009-2025 VINADES.,JSC. All rights reserved
  * @license GNU/GPL version 2 or any later version
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
@@ -27,14 +27,19 @@
  */
 export interface NVBoxConfig {
     /*
-     *
+     * Url duyệt file
      */
     browseUrl?: string;
 
     /*
-     *
+     * Các tùy chọn của NVBox
      */
     options?: NVBoxOptions;
+
+    /**
+     * Phiên bản NukeViet sử dụng
+     */
+    version?: string;
 }
 
 export interface NVBoxOptions extends Record<string, unknown> {
