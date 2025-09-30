@@ -11,8 +11,10 @@
 
 import { Command, type Editor } from 'ckeditor5';
 
-import type { Notification } from 'ckeditor5';
+import type { Dialog, Notification } from 'ckeditor5';
 import { extIsAudio, extIsImage, extIsVideo, getFileExtension } from './utils.js';
+
+import type { NVToolsUI } from '@nukeviet/ckeditor5-nvtools';;
 
 export default class NVBoxCommand extends Command {
 	constructor(editor: Editor) {
@@ -43,12 +45,21 @@ export default class NVBoxCommand extends Command {
 	 * @inheritDoc
 	 */
 	public override execute(href: string = '', options: Record<string, boolean> = {}): void {
-		const editor = this.editor;
+		const editor: Editor = this.editor;
 		const nvboxOptions = this.editor.config.get('nvbox.options') || {};
 		const notification: Notification = editor.plugins.get('Notification');
 		const t = editor.locale.t;
 
 		if (href !== '') {
+			const dialog: Dialog = editor.plugins.get('Dialog');
+
+			if (dialog.id == 'nvtoolsSaveExternalImage') {
+				// Trả về dữ liệu cho ô path lưu ảnh ngoài
+				const nvtoolsUI: NVToolsUI = editor.plugins.get('NVToolsUI');
+				nvtoolsUI.setExternalImagePath(href);
+				return;
+			}
+
 			// Xử lý khi pick
 			const fileExt = getFileExtension(href);
 
