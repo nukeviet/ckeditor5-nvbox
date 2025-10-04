@@ -148,6 +148,16 @@ export default class NVBoxUI extends Plugin {
                 }
             });
         }
+
+        // Init luôn Picker của NukeViet khi build trình soạn thảo
+        const pickerUrl = editor.config.get('nvbox.pickerUrl') || '';
+        if (!!pickerUrl && !window.nvPickerLoad) {
+            window.nvPickerLoad = true;
+            const script = document.createElement('script');
+            script.src = pickerUrl;
+            script.async = true;
+            document.body.appendChild(script);
+        }
     }
 
     /**

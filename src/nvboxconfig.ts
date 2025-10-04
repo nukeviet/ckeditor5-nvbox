@@ -32,6 +32,11 @@ export interface NVBoxConfig {
     browseUrl?: string;
 
     /*
+     * Url js trình quản lý file
+     */
+    pickerUrl?: string;
+
+    /*
      * Các tùy chọn của NVBox
      */
     options?: NVBoxOptions;

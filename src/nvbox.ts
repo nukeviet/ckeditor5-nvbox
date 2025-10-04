@@ -11,6 +11,17 @@ import { Plugin } from 'ckeditor5';
 import NVBoxUI from './nvboxui.js';
 import NVBoxEditing from './nvboxediting.js';
 
+declare global {
+    interface Window {
+        nvPickerLoad?: boolean;
+        nvPickerReady?: boolean;
+        nukeviet?: {
+            Picker?: any;
+            [key: string]: any;
+        };
+    }
+}
+
 export default class NVBox extends Plugin {
     /**
      * @inheritDoc
