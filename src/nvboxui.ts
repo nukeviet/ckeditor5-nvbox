@@ -8,10 +8,13 @@
  */
 
 import { Plugin } from 'ckeditor5';
-import { ButtonView, MenuBarMenuListItemButtonView } from 'ckeditor5';
+import {
+    ButtonView, MenuBarMenuListItemButtonView,
+    ReplaceImageSourceCommand
+} from 'ckeditor5';
 import { IconBrowseFiles, IconImageAssetManager } from 'ckeditor5';
 import type { ImageInsertUI } from 'ckeditor5';
-import type { NVMediaInsertUI } from '@nukeviet/ckeditor5-nvmedia';
+import type { NVMediaInsertUI, ReplaceNVMediaSourceCommand } from '@nukeviet/ckeditor5-nvmedia';
 import type NVBoxCommand from './nvboxcommand.js';
 
 import mediaIcon from '../theme/icons/media-asset-manager.svg';
@@ -46,7 +49,17 @@ export default class NVBoxUI extends Plugin {
             button.bind('isEnabled').to(command);
 
             button.on('execute', () => {
-                editor.execute('nvbox');
+                editor.execute('nvbox', button.element!, {
+                    callback: (data: Record<string, any>) => {
+                        if (data.alt && data.alt != '') {
+                            command.execute(data.path, {
+                                alt: data.alt
+                            });
+                        } else {
+                            command.execute(data.path);
+                        }
+                    }
+                });
                 editor.editing.view.focus();
             });
 
@@ -63,7 +76,7 @@ export default class NVBoxUI extends Plugin {
 
                 // Nút chèn ảnh/đổi ảnh trên toolbar tùy đối tượng đang chọn
                 buttonViewCreator: () => {
-                    const button = this._createButton(ButtonView);
+                    const button = this._createButton(ButtonView, 'image');
 
                     button.icon = IconImageAssetManager;
                     button.bind('label').to(imageInsertUI, 'isImageSelected', isImageSelected => isImageSelected ?
@@ -76,7 +89,7 @@ export default class NVBoxUI extends Plugin {
 
                 // Menu thêm vào của trình chèn ảnh
                 formViewCreator: () => {
-                    const button = this._createButton(ButtonView);
+                    const button = this._createButton(ButtonView, 'image');
 
                     button.icon = IconImageAssetManager;
                     button.withText = true;
@@ -94,9 +107,9 @@ export default class NVBoxUI extends Plugin {
 
                 // Menu trong menubar (thanh công cụ thường thấy trên word)
                 menuBarButtonViewCreator: (isOnly) => {
-                    const button = this._createButton(MenuBarMenuListItemButtonView);
+                    const button = this._createButton(MenuBarMenuListItemButtonView, 'image');
                     button.icon = IconImageAssetManager;
-		            button.withText = true;
+                    button.withText = true;
 
                     if (isOnly) {
                         button.label = t('Image');
@@ -118,7 +131,7 @@ export default class NVBoxUI extends Plugin {
                 observable: () => editor.commands.get('nvbox')!,
 
                 buttonViewCreator: () => {
-                    const button = this._createButton(ButtonView);
+                    const button = this._createButton(ButtonView, 'media');
 
                     button.icon = mediaIcon;
                     button.bind('label').to(mediaInsertUI, 'isMediaSelected', isMediaSelected => isMediaSelected ?
@@ -131,7 +144,7 @@ export default class NVBoxUI extends Plugin {
                 },
 
                 formViewCreator: () => {
-                    const button = this._createButton(ButtonView);
+                    const button = this._createButton(ButtonView, 'media');
 
                     button.icon = mediaIcon;
                     button.withText = true;
@@ -161,23 +174,37 @@ export default class NVBoxUI extends Plugin {
     }
 
     /**
-     * Tạo nút, loại nút tùy đầu vào
+     * Tạo nút, loại nút tùy đầu vào dùng tích hợp với ảnh, media insert
      *
      * @param ButtonClass
      * @returns
      */
-    private _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>( ButtonClass: T ): InstanceType<T> {
+    private _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>(ButtonClass: T, withIntegration: 'image' | 'media'): InstanceType<T> {
         const editor = this.editor;
         const locale = editor.locale;
         const view = new ButtonClass(locale) as InstanceType<T>;
         const command = editor.commands.get('nvbox')!;
+        const replaceImageSourceCommand: ReplaceImageSourceCommand = editor.commands.get('replaceImageSource')!;
+        const replaceNVMediaSourceCommand: ReplaceNVMediaSourceCommand = editor.commands.get('replaceNVMediaSource')!;
 
         view.bind('isOn', 'isEnabled').to(command, 'value', 'isEnabled');
 
         view.on('execute', () => {
-            editor.execute('nvbox');
+            const value = withIntegration == 'image' ? replaceImageSourceCommand.value : replaceNVMediaSourceCommand.value;
+            editor.execute('nvbox', view.element!, {
+                imgfile: value,
+                callback: (data: Record<string, any>) => {
+                    if (data.alt && data.alt != '') {
+                        command.execute(data.path, {
+                            alt: data.alt
+                        });
+                    } else {
+                        command.execute(data.path);
+                    }
+                }
+            });
         });
 
         return view;
-	}
+    }
 }

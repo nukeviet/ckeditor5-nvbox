@@ -17,7 +17,12 @@ import { extIsAudio, extIsImage, extIsVideo, getFileExtension } from './utils.js
 import type { NVToolsUI } from '@nukeviet/ckeditor5-nvtools';;
 import type { NVDocsInsertUI } from '@nukeviet/ckeditor5-nvdocs';;
 
+declare const nukeviet: any;
+declare const bootstrap: any;
+
 export default class NVBoxCommand extends Command {
+	private waitPicker: boolean = false;
+
 	constructor(editor: Editor) {
 		super(editor);
 
@@ -45,7 +50,7 @@ export default class NVBoxCommand extends Command {
 	/**
 	 * @inheritDoc
 	 */
-	public override execute(href: string | Element = '', options: Record<string, boolean> = {}): void {
+	public override execute(href: string | Element = '', options: Record<string, any> = {}): void {
 		const editor: Editor = this.editor;
 		const nvboxOptions = this.editor.config.get('nvbox.options') || {};
 		const notification: Notification = editor.plugins.get('Notification');
@@ -129,9 +134,9 @@ export default class NVBoxCommand extends Command {
 		}
 
 		const pickerUrl = editor.config.get('nvbox.pickerUrl') || '';
-		if (!!pickerUrl && !!href && href instanceof Element) {
-			// NukeViet 5 trình chọn file mới
-			this._showPicker(href);
+		if (!!pickerUrl && !!href && href instanceof Element && typeof bootstrap !== 'undefined') {
+			// NukeViet 5 trình chọn file mới, giao diện Bootstrap 5
+			this._showPicker(href, options.imgfile ? (options.imgfile as string) : undefined, options.callback ? options.callback : undefined);
 			return;
 		}
 
@@ -145,29 +150,27 @@ export default class NVBoxCommand extends Command {
 		window.open(browseUrl, 'filemanager', settings)?.focus();
 	}
 
-	private waitPicker: boolean = false;
-
 	/**
 	 * Hiển thị trình chọn file
 	 */
-	private _showPicker(element: Element): void {
+	private _showPicker(element: Element, imgfile?: string, callback?: ((data: Record<string, any>) => void)): void {
 		// Khi chưa load xong Picker thì chờ đến khi load xong mới hiển thị
 		if (!window.nvPickerReady) {
 			if (!this.waitPicker) {
 				this.waitPicker = true;
 				document.addEventListener('nv.picker.ready', () => {
-                    this._delayShowPicker(element);
+                    this._delayShowPicker(element, imgfile, callback);
                 });
 			}
 			return;
 		}
-		this._delayShowPicker(element);
+		this._delayShowPicker(element, imgfile, callback);
 	}
 
 	/**
 	 * Hiển thị trình chọn file sau khi đã load xong
 	 */
-	private _delayShowPicker(element: Element): void {
+	private _delayShowPicker(element: Element, imgfile?: string, callback?: ((data: Record<string, any>) => void)): void {
 		let browseUrl = this.editor.config.get('nvbox.browseUrl') || '';
 		const u = new URL(browseUrl, window.location.origin);
 
@@ -185,13 +188,21 @@ export default class NVBoxCommand extends Command {
 		}
 		u.searchParams.has('alt') && (options.alt = u.searchParams.get('alt'));
 
+		// Không tự động xử lý sự kiện trên element mà thủ công qua show()
+		options.trigger = 'manual';
+		options.onSelect = (data: Record<string, any>) => {
+			if (callback) {
+				callback(data);
+			}
+		};
+
 		const picker = nukeviet.Picker.getOrCreateInstance(element, options);
 
 		// Dùng để pick lần thứ 2 trở đi
-		// picker.setOption('imgfile', options.imgfile);
+		if (imgfile) {
+			picker.setOption('imgfile', imgfile);
+		}
 
 		picker.show();
 	}
 }
-
-declare const nukeviet: any;
