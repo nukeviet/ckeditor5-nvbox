@@ -1,0 +1,6 @@
+.ck-dialog-opened {
+    --fmm-zindex-backdrop: calc(var(--ck-z-dialog) + 1);
+    --fmm-zindex: calc(var(--ck-z-dialog) + 2);
+    --fmd-zindex-backdrop: calc(var(--ck-z-dialog) + 3);
+    --fmd-zindex: calc(var(--ck-z-dialog) + 4);
+}

@@ -11,6 +11,8 @@ import { Plugin } from 'ckeditor5';
 import NVBoxUI from './nvboxui.js';
 import NVBoxEditing from './nvboxediting.js';
 
+import '../theme/nvbox.css';
+
 declare global {
     interface Window {
         nvPickerLoad?: boolean;
