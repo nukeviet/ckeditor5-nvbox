@@ -14,28 +14,28 @@ import NVBoxEditing from './nvboxediting.js';
 import '../theme/nvbox.css';
 
 declare global {
-    interface Window {
-        nvPickerLoad?: boolean;
-        nvPickerReady?: boolean;
-        nukeviet?: {
-            Picker?: any;
-            [key: string]: any;
-        };
-    }
+	interface Window {
+		nvPickerLoad?: boolean;
+		nvPickerReady?: boolean;
+		nukeviet?: {
+			Picker?: any;
+			[key: string]: any;
+		};
+	}
 }
 
 export default class NVBox extends Plugin {
-    /**
+	/**
      * @inheritDoc
      */
-    static get pluginName() {
-        return 'NVBox' as const;
-    }
+	public static get pluginName() {
+		return 'NVBox' as const;
+	}
 
-    /**
+	/**
      * @inheritDoc
      */
-    static get requires() {
-        return ['Link', NVBoxEditing, NVBoxUI] as const;
-    }
+	public static get requires() {
+		return [ 'Link', NVBoxEditing, NVBoxUI ] as const;
+	}
 }

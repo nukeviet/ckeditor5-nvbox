@@ -26,25 +26,26 @@
  * ```
  */
 export interface NVBoxConfig {
-    /*
+
+	/*
      * Url duyệt file
      */
-    browseUrl?: string;
+	browseUrl?: string;
 
-    /*
+	/*
      * Url js trình quản lý file
      */
-    pickerUrl?: string;
+	pickerUrl?: string;
 
-    /*
+	/*
      * Các tùy chọn của NVBox
      */
-    options?: NVBoxOptions;
+	options?: NVBoxOptions;
 
-    /**
+	/**
      * Phiên bản NukeViet sử dụng
      */
-    version?: string;
+	version?: string;
 }
 
 export interface NVBoxOptions extends Record<string, unknown> {

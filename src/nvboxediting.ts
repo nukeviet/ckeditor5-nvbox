@@ -7,11 +7,10 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 /* globals window */
 
-import { Plugin } from 'ckeditor5';
-import { CKEditorError } from 'ckeditor5';
-import { Notification } from 'ckeditor5';
+import { Plugin, CKEditorError, Notification } from 'ckeditor5';
 import NVBoxCommand from './nvboxcommand.js';
 
 export default class NVBoxEditing extends Plugin {
@@ -26,19 +25,21 @@ export default class NVBoxEditing extends Plugin {
 	 * @inheritDoc
 	 */
 	public static get requires() {
-		return [Notification, 'LinkEditing'] as const;
+		return [ Notification, 'LinkEditing' ] as const;
 	}
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @error nvbox-missing-image-plugin
 	 */
 	public init(): void {
 		const editor = this.editor;
 
-		if (!editor.plugins.has('ImageBlockEditing') && !editor.plugins.has('ImageInlineEditing')) {
-			throw new CKEditorError('nvbox-missing-image-plugin', editor);
+		if ( !editor.plugins.has( 'ImageBlockEditing' ) && !editor.plugins.has( 'ImageInlineEditing' ) ) {
+			throw new CKEditorError( 'nvbox-missing-image-plugin', editor );
 		}
 
-		editor.commands.add('nvbox', new NVBoxCommand(editor));
+		editor.commands.add( 'nvbox', new NVBoxCommand( editor ) );
 	}
 }

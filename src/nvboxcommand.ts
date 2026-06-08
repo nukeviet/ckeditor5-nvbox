@@ -7,15 +7,20 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 /* global document, window, setTimeout, URL */
 
-import { Command, type Editor } from 'ckeditor5';
+import {
+	Command,
+	type Editor,
+	type Dialog,
+	type Notification
+} from 'ckeditor5';
 
-import type { Dialog, Notification } from 'ckeditor5';
 import { extIsAudio, extIsImage, extIsVideo, getFileExtension } from './utils.js';
 
-import type { NVToolsUI } from '@nukeviet/ckeditor5-nvtools';;
-import type { NVDocsInsertUI } from '@nukeviet/ckeditor5-nvdocs';;
+import type { NVToolsUI } from '@nukeviet/ckeditor5-nvtools'; ;
+import type { NVDocsInsertUI } from '@nukeviet/ckeditor5-nvdocs'; ;
 
 declare const nukeviet: any;
 declare const bootstrap: any;
@@ -23,25 +28,25 @@ declare const bootstrap: any;
 export default class NVBoxCommand extends Command {
 	private waitPicker: boolean = false;
 
-	constructor(editor: Editor) {
-		super(editor);
+	constructor( editor: Editor ) {
+		super( editor );
 
 		// The NVBox command does not affect data by itself.
 		this.affectsData = false;
 
 		// Remove default document listener to lower its priority.
-		this.stopListening(this.editor.model.document, 'change');
+		this.stopListening( this.editor.model.document, 'change' );
 
 		// Lower this command listener priority to be sure that refresh() will be called after link & image refresh.
-		this.listenTo(this.editor.model.document, 'change', () => this.refresh(), { priority: 'low' });
+		this.listenTo( this.editor.model.document, 'change', () => this.refresh(), { priority: 'low' } );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public override refresh(): void {
-		const imageCommand = this.editor.commands.get('insertImage')!;
-		const linkCommand = this.editor.commands.get('link')!;
+		const imageCommand = this.editor.commands.get( 'insertImage' )!;
+		const linkCommand = this.editor.commands.get( 'link' )!;
 
 		// The NVBox command is enabled when one of image or link command is enabled.
 		this.isEnabled = imageCommand.isEnabled || linkCommand.isEnabled;
@@ -50,157 +55,164 @@ export default class NVBoxCommand extends Command {
 	/**
 	 * @inheritDoc
 	 */
-	public override execute(href: string | Element = '', options: Record<string, any> = {}): void {
+	public override execute( href: string | Element = '', options: Record<string, any> = {} ): void {
 		const editor: Editor = this.editor;
-		const nvboxOptions = this.editor.config.get('nvbox.options') || {};
-		const notification: Notification = editor.plugins.get('Notification');
+		const nvboxOptions = this.editor.config.get( 'nvbox.options' ) || {};
+		const notification: Notification = editor.plugins.get( 'Notification' );
 		const t = editor.locale.t;
 
-		if (href !== '' && !(href instanceof Element)) {
-			const dialog: Dialog = editor.plugins.get('Dialog');
+		if ( href !== '' && !( href instanceof Element ) ) {
+			const dialog: Dialog = editor.plugins.get( 'Dialog' );
 
 			// Trả về path cho ô lưu ảnh ngoài
-			if (dialog.id == 'nvtoolsSaveExternalImage') {
-				const nvtoolsUI: NVToolsUI = editor.plugins.get('NVToolsUI');
-				nvtoolsUI.setExternalImagePath(href);
+			if ( dialog.id == 'nvtoolsSaveExternalImage' ) {
+				const nvtoolsUI: NVToolsUI = editor.plugins.get( 'NVToolsUI' );
+				nvtoolsUI.setExternalImagePath( href );
 				return;
 			}
 
 			// Trả về path cho ô chèn tài liệu
-			if (dialog.id == 'nvdocsInsert') {
-				const nvdocsInsertUI: NVDocsInsertUI = editor.plugins.get('NVDocsInsertUI');
-				nvdocsInsertUI.setUrl(href);
+			if ( dialog.id == 'nvdocsInsert' ) {
+				const nvdocsInsertUI: NVDocsInsertUI = editor.plugins.get( 'NVDocsInsertUI' );
+				nvdocsInsertUI.setUrl( href );
 				return;
 			}
 
 			// Xử lý chèn ảnh, link, media tùy theo định dạng file đã pick
-			const fileExt = getFileExtension(href);
+			const fileExt = getFileExtension( href );
 
 			// Chèn ảnh, command của ckeditor
-			if (extIsImage(fileExt)) {
-				const imageCommand = editor.commands.get('insertImage')!;
+			if ( extIsImage( fileExt ) ) {
+				const imageCommand = editor.commands.get( 'insertImage' )!;
 
-				if (!imageCommand.isEnabled) {
-					notification.showWarning(t('Could not insert image at the current position.'), {
-						title: t('Inserting image failed'),
+				if ( !imageCommand.isEnabled ) {
+					notification.showWarning( t( 'Could not insert image at the current position.' ), {
+						title: t( 'Inserting image failed' ),
 						namespace: 'nvbox'
-					});
+					} );
 
 					return;
 				}
 
-				if (options.alt) {
-					editor.execute('insertImage', {
-						source: [{
+				if ( options.alt ) {
+					editor.execute( 'insertImage', {
+						source: [ {
 							src: href,
 							alt: options.alt
-						}]
-					});
+						} ]
+					} );
 				} else {
-					editor.execute('insertImage', { source: href });
+					editor.execute( 'insertImage', { source: href } );
 				}
 				return;
 			}
 
 			// Chèn âm thanh, video
-			if (extIsAudio(fileExt) || extIsVideo(fileExt)) {
-				editor.execute('insertNVMedia', { source: href });
+			if ( extIsAudio( fileExt ) || extIsVideo( fileExt ) ) {
+				editor.execute( 'insertNVMedia', { source: href } );
 				return;
 			}
 
 			// Chèn link, command của ckeditor
-			editor.execute('link', href, {
+			editor.execute( 'link', href, {
 				linkIsExternal: false,
 				linkIsDownloadable: true
-			});
+			} );
 			return;
 		}
 
 		// Lấy đường dẫn duyệt file
-		let browseUrl = this.editor.config.get('nvbox.browseUrl') || '';
-		if (browseUrl == '') {
-			const notification: Notification = editor.plugins.get('Notification');
+		let browseUrl = this.editor.config.get( 'nvbox.browseUrl' ) || '';
+		if ( browseUrl == '' ) {
+			const notification: Notification = editor.plugins.get( 'Notification' );
 			const t = editor.locale.t;
 
-			notification.showWarning(t('browserUrl is not set.'), {
-				title: t('Error config NVBox'),
+			notification.showWarning( t( 'browserUrl is not set.' ), {
+				title: t( 'Error config NVBox' ),
 				namespace: 'nvbox'
-			});
+			} );
 
 			return;
 		}
-		if (nvboxOptions.noCache) {
-			browseUrl += ((browseUrl.indexOf('?') == -1) ? '?' : '&') + 'nocache=' + (new Date().getTime());
+		if ( nvboxOptions.noCache ) {
+			browseUrl += ( ( browseUrl.indexOf( '?' ) == -1 ) ? '?' : '&' ) + 'nocache=' + ( new Date().getTime() );
 		}
 
-		const pickerUrl = editor.config.get('nvbox.pickerUrl') || '';
-		if (!!pickerUrl && !!href && href instanceof Element && typeof bootstrap !== 'undefined') {
+		const pickerUrl = editor.config.get( 'nvbox.pickerUrl' ) || '';
+		if ( !!pickerUrl && !!href && href instanceof Element && typeof bootstrap !== 'undefined' ) {
 			// NukeViet 5 trình chọn file mới, giao diện Bootstrap 5
-			this._showPicker(href, options.imgfile ? (options.imgfile as string) : undefined, options.callback ? options.callback : undefined);
+			this._showPicker( href, options.imgfile ?
+				( options.imgfile as string ) : undefined, options.callback ? options.callback : undefined );
 			return;
 		}
 
 		// Mở popup duyệt file mặc định nếu không có phương thức nào mới
-		let w = (screen.availWidth * 70 / 100);
-		let h = (screen.availHeight * 70 / 100);
+		const w = ( screen.availWidth * 70 / 100 );
+		const h = ( screen.availHeight * 70 / 100 );
 
-		var leftSc = (screen.width) ? (screen.width - w) / 2 : 0,
-			topSc = (screen.height) ? (screen.height - h) / 2 : 0,
-			settings = 'height=' + h + ',width=' + w + ',top=' + topSc + ',left=' + leftSc;
-		window.open(browseUrl, 'filemanager', settings)?.focus();
+		const leftSc = ( screen.width ) ? ( screen.width - w ) / 2 : 0;
+		const topSc = ( screen.height ) ? ( screen.height - h ) / 2 : 0;
+		const settings = 'height=' + h + ',width=' + w + ',top=' + topSc + ',left=' + leftSc;
+		window.open( browseUrl, 'filemanager', settings )?.focus();
 	}
 
 	/**
 	 * Hiển thị trình chọn file
 	 */
-	private _showPicker(element: Element, imgfile?: string, callback?: ((data: Record<string, any>) => void)): void {
+	private _showPicker( element: Element, imgfile?: string, callback?: ( ( data: Record<string, any> ) => void ) ): void {
 		// Khi chưa load xong Picker thì chờ đến khi load xong mới hiển thị
-		if (!window.nvPickerReady) {
-			if (!this.waitPicker) {
+		if ( !window.nvPickerReady ) {
+			if ( !this.waitPicker ) {
 				this.waitPicker = true;
-				document.addEventListener('nv.picker.ready', () => {
-                    this._delayShowPicker(element, imgfile, callback);
-                });
+				document.addEventListener( 'nv.picker.ready', () => {
+					this._delayShowPicker( element, imgfile, callback );
+				} );
 			}
 			return;
 		}
-		this._delayShowPicker(element, imgfile, callback);
+		this._delayShowPicker( element, imgfile, callback );
 	}
 
 	/**
 	 * Hiển thị trình chọn file sau khi đã load xong
 	 */
-	private _delayShowPicker(element: Element, imgfile?: string, callback?: ((data: Record<string, any>) => void)): void {
-		let browseUrl = this.editor.config.get('nvbox.browseUrl') || '';
-		const u = new URL(browseUrl, window.location.origin);
+	private _delayShowPicker( element: Element, imgfile?: string, callback?: ( ( data: Record<string, any> ) => void ) ): void {
+		const browseUrl = this.editor.config.get( 'nvbox.browseUrl' ) || '';
+		const u = new URL( browseUrl, window.location.origin );
 
 		const options: Record<string, any> = {};
-		u.searchParams.has('editor_id') && (options.editorId = u.searchParams.get('editor_id'));
-		if (u.searchParams.has('path')) {
-			options.path = u.searchParams.get('path');
-			options.currentpath = u.searchParams.get('path');
+		if ( u.searchParams.has( 'editor_id' ) ) {
+			options.editorId = u.searchParams.get( 'editor_id' );
 		}
-		u.searchParams.has('currentpath') && (options.currentpath = u.searchParams.get('currentpath'));
-		if (u.searchParams.has('type')) {
-			options.type = u.searchParams.get('type');
+		if ( u.searchParams.has( 'path' ) ) {
+			options.path = u.searchParams.get( 'path' );
+			options.currentpath = u.searchParams.get( 'path' );
+		}
+		if ( u.searchParams.has( 'currentpath' ) ) {
+			options.currentpath = u.searchParams.get( 'currentpath' );
+		}
+		if ( u.searchParams.has( 'type' ) ) {
+			options.type = u.searchParams.get( 'type' );
 		} else {
 			options.type = 'file';
 		}
-		u.searchParams.has('alt') && (options.alt = u.searchParams.get('alt'));
+		if ( u.searchParams.has( 'alt' ) ) {
+			options.alt = u.searchParams.get( 'alt' );
+		}
 
 		// Không tự động xử lý sự kiện trên element mà thủ công qua show()
 		options.trigger = 'manual';
-		options.onSelect = (data: Record<string, any>) => {
-			if (callback) {
-				callback(data);
+		options.onSelect = ( data: Record<string, any> ) => {
+			if ( callback ) {
+				callback( data );
 			}
 		};
 
-		const picker = nukeviet.Picker.getOrCreateInstance(element, options);
+		const picker = nukeviet.Picker.getOrCreateInstance( element, options );
 
 		// Dùng để pick lần thứ 2 trở đi
-		if (imgfile) {
-			picker.setOption('imgfile', imgfile);
+		if ( imgfile ) {
+			picker.setOption( 'imgfile', imgfile );
 		}
 
 		picker.show();
