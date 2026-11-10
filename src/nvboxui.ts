@@ -2,7 +2,7 @@
  * NukeViet NVBox for CKEditor5
  * @version 5.x
  * @author VINADES.,JSC <contact@vinades.vn>
- * @copyright (C) 2009-2025 VINADES.,JSC. All rights reserved
+ * @copyright (C) 2009-2026 VINADES.,JSC. All rights reserved
  * @license GNU/GPL version 2 or any later version
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
@@ -43,7 +43,7 @@ export default class NVBoxUI extends Plugin {
 			const button = new ButtonView( locale );
 
 			button.set( {
-				label: t( 'Insert file from NVFileManager' ),
+				label: t( { id: 'Insert file from NVFileManager', string: 'Insert file from File manager' } ),
 				icon: IconBrowseFiles,
 				tooltip: true
 			} );

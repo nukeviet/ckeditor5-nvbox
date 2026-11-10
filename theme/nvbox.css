@@ -6,8 +6,8 @@ html.ck-fullscreen:not(.ck-dialog-opened) {
 }
 
 html.ck-dialog-opened {
-	--fmm-zindex-backdrop: calc(var(--ck-z-dialog) + 1);
-	--fmm-zindex: calc(var(--ck-z-dialog) + 2);
-	--fmd-zindex-backdrop: calc(var(--ck-z-dialog) + 3);
-	--fmd-zindex: calc(var(--ck-z-dialog) + 4);
+	--fmm-zindex-backdrop: calc(var(--ck-layer-dialog) + 1);
+	--fmm-zindex: calc(var(--ck-layer-dialog) + 2);
+	--fmd-zindex-backdrop: calc(var(--ck-layer-dialog) + 3);
+	--fmd-zindex: calc(var(--ck-layer-dialog) + 4);
 }

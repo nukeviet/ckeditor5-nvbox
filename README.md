@@ -6,7 +6,7 @@ Tích hợp nút chèn file/ ảnh từ trình quản lý file vào trình soạ
 
 Yêu cầu:
 
-- Node.js 18.0.0+
+- Node.js 26.10.0+
 - npm 5.7.1+
 
 ```
